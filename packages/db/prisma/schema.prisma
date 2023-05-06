@@ -35,6 +35,9 @@ model Account {
     session_state     String?
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+    // github spesific
+    refresh_token_expires_in Int?
+
     @@unique([provider, providerAccountId])
 }
 
