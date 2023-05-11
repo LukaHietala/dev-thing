@@ -39,6 +39,7 @@ type CreateContextOptions = {
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     session: opts.session,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     prisma,
   };
 };
