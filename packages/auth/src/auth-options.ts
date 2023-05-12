@@ -60,6 +60,6 @@ export const authOptions: NextAuthOptions = {
     signIn: "/auth/signin",
     signOut: "/auth/signout",
     error: "/auth/error",
-    newUser: "/auth/new-user",
+    //newUser: "/auth/new-user",
   },
 };
