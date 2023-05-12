@@ -3,6 +3,8 @@
  * This is especially useful for Docker builds and Linting.
  */
 // !process.env.SKIP_ENV_VALIDATION && (await import("./src/env.mjs"));
+// @ts-ignore
+import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin";
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -12,6 +14,13 @@ const config = {
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: !!process.env.CI },
   typescript: { ignoreBuildErrors: !!process.env.CI },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.plugins = [...config.plugins, new PrismaPlugin()];
+    }
+
+    return config;
+  },
 };
 
 export default config;
