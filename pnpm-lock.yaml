@@ -46,6 +46,9 @@ importers:
       '@acme/tailwind-config':
         specifier: ^0.1.0
         version: link:../../packages/config/tailwind
+      '@radix-ui/react-slot':
+        specifier: ^1.0.1
+        version: 1.0.1(react@18.2.0)
       '@t3-oss/env-nextjs':
         specifier: ^0.2.2
         version: 0.2.2(zod@3.21.4)
@@ -174,9 +177,6 @@ importers:
       '@next-auth/prisma-adapter':
         specifier: ^1.0.6
         version: 1.0.6(@prisma/client@4.13.0)(next-auth@4.22.1)
-      '@radix-ui/react-slot':
-        specifier: ^1.0.1
-        version: 1.0.1(react@18.2.0)
       next:
         specifier: ^13.3.2
         version: 13.3.2(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0)
