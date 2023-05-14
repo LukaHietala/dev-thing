@@ -1,4 +1,3 @@
-import type { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { signIn, signOut } from "next-auth/react";
@@ -84,12 +83,13 @@ const Navbar: React.FC = () => {
   );
 };
 
-const Home: NextPage = () => {
+const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
-      <p>hello</p>
-    </>
+    <div className="flex min-h-screen flex-col">
+      <Navbar />
+      <main className="flex-grow">{children}</main>
+    </div>
   );
 };
 
-export default Home;
+export default MainLayout;

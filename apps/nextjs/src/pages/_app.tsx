@@ -5,6 +5,7 @@ import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 
 import { api } from "~/utils/api";
+import MainLayout from "~/components/main-layout";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,7 +22,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
           --inter-font: ${inter.style.fontFamily};
         }
       `}</style>
-      <Component {...pageProps} />
+      <MainLayout>
+        <Component {...pageProps} />
+      </MainLayout>
     </SessionProvider>
   );
 };
