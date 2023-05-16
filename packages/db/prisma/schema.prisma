@@ -41,14 +41,14 @@ model Session {
 }
 
 model User {
-  id            String     @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String?
-  email         String?    @unique
+  email         String?   @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
-  Question      Question[]
+  Post          Post[]
   Answer        Answer[]
   Comment       Comment[]
 }
@@ -61,9 +61,9 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-// USER => QUESTION => ANSWER => COMMENT
+// USER => POST => ANSWER => COMMENT
 
-model Question {
+model Post {
   id          String   @id @default(cuid())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -72,7 +72,6 @@ model Question {
   content     String   @db.Text
   draft       Boolean  @default(true)
   votes       Int      @default(0)
-  views       Int      @default(0)
   resolved    Boolean  @default(false)
   author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId    String
@@ -83,27 +82,27 @@ model Question {
 }
 
 model Tag {
-  id        String     @id @default(cuid())
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   name      String
-  questions Question[]
+  posts     Post[]
 }
 
 model Answer {
-  id         String    @id @default(cuid())
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  content    String    @db.Text
-  best       Boolean   @default(false)
-  author     User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId   String
-  question   Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  questionId String
-  comments   Comment[]
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  content   String    @db.Text
+  best      Boolean   @default(false)
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String
+  post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+  comments  Comment[]
 
-  @@index([questionId])
   @@index([authorId])
+  @@index([postId])
 }
 
 model Comment {
@@ -116,6 +115,6 @@ model Comment {
   answer    Answer   @relation(fields: [answerId], references: [id], onDelete: Cascade)
   answerId  String
 
-  @@index([answerId])
   @@index([authorId])
+  @@index([answerId])
 }
