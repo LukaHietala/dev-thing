@@ -4,16 +4,18 @@ import Link from "next/link";
 import { Filter } from "lucide-react";
 
 import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
 
 const MainContent: React.FC = () => {
   return (
     <main className="flex-1">
-      <h1 className="text-2xl font-semibold">Recent Questions</h1>
-      <p className="text-sm text-gray-500">
-        Questions that have been asked recently
-      </p>
-      <div className="mt-4 flex flex-row items-center justify-between">
-        <Button>Ask Question</Button>
+      <h2 className="text-2xl font-semibold text-gray-900">All Questions</h2>
+      <p className="mt-2 text-sm text-gray-500">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quod
+        voluptates, quibusdam, voluptatum, quia voluptate quos dolorum
+        voluptatibus quas quibusdam, quia voluptate quos dolorum voluptatibus
+        </p>
+      <div className="mt-6 flex flex-row items-center justify-between">
         <div className="flex flex-row gap-2">
           <Button variant="secondary" className="inline-flex">
             <Filter size={14} />
@@ -24,104 +26,80 @@ const MainContent: React.FC = () => {
             <span className="ml-1">Sort</span>
           </Button>
         </div>
+        <div className="flex flex-row gap-2">
+          <Button>Ask Question</Button>
+        </div>
       </div>
-      <hr className="my-8" />
-      <h2 className="text-xl font-medium text-gray-900">Hot Questions</h2>
-      <p className="text-sm text-gray-500">
-        Questions that have been asked recently and have a lot of views and
-        votes
-      </p>
-      <div className="mt-8 grid grid-cols-3 gap-2">
-        {
-          // Hot questions
-          questions
-            .filter((question) => question.hot)
-            .map((question) => (
-              <div
-                key={question.id}
-                className="mb-4 rounded-md border border-gray-200 bg-white"
-              >
-                <div
-                  className="relative flex h-12 items-center justify-between
-                  rounded-t-md bg-gray-200
-                "
-                >
-                  <Image
-                    width={40}
-                    height={40}
-                    src={question.author.image}
-                    alt="profile img"
-                    className="absolute bottom-0 left-0 -mb-4 ml-4 h-auto w-10 rounded-full border-2 border-white object-cover"
-                  />
-                </div>
-                <div className="p-4">
-                  <div className="mt-2">
-                    <Link href={`/questions/${question.id}`}>
-                      <span className="text-lg font-semibold">
-                        {question.title}
-                      </span>
-                    </Link>
-                    <p className="text-sm text-gray-500">
-                      {question.description}
-                    </p>
-                  </div>
-                  <div className="mt-2">
-                    {question.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="mr-2 rounded-md bg-gray-100 px-2 py-1 text-xs text-gray-500"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))
-        }
+
+      <hr className="my-4" />
+      <div className="flex flex-row items-center justify-between">
+        <div className="flex flex-row gap-2">
+          <Input placeholder="Search..." className="h-8 w-96" />
+          <Button variant="outline" className="h-8 px-3">
+            Recent
+          </Button>
+          <Button variant="outline" className="h-8 px-3">
+            Popular
+          </Button>
+          <Button variant="outline" className="h-8 px-3">
+            Unanswered
+          </Button>
+        </div>
+        <div className="flex flex-row gap-2">
+          <Button variant="outline" className="h-8 px-3">
+            Next
+          </Button>
+        </div>
       </div>
-      <h2 className="mt-8 text-xl font-medium text-gray-900">All Questions</h2>
-      <div className="mt-4">
+
+      <div className="mt-2 divide-y divide-gray-200">
         {questions.map((question) => (
-          <div
-            key={question.id}
-            className="mb-4 rounded-md border border-gray-200 bg-white p-4"
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
+          <div key={question.id} className="flex flex-col py-4">
+            <div className="flex flex-row items-center justify-between">
+              <div className="flex flex-row items-center gap-2">
                 <Image
                   width={40}
                   height={40}
                   src={question.author.image}
                   alt="profile img"
-                  className="h-auto w-10 rounded-full border-2 border-primary object-cover"
+                  className="h-auto w-10 rounded-full border-2 border-white object-cover"
                 />
-                <div className="ml-2">
-                  <p className="text-sm font-semibold">
-                    {question.author.name}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    {new Date(question.createdAt).toLocaleDateString()}
-                  </p>
+                <div className="flex flex-col">
+                  <Link href={`/questions/${question.id}`}>
+                    <span className="text-lg font-semibold">
+                      {question.title}
+                    </span>
+                  </Link>
+                  <span className="text-sm text-gray-500">
+                    Asked by{" "}
+                    <Link href={`/users/${question.author.id}`}>
+                      <span className="cursor-pointer underline">
+                        {question.author.name}
+                      </span>
+                    </Link>
+                  </span>
                 </div>
               </div>
-              <div>
-                <p className="text-xs text-gray-500">
-                  {new Date(question.createdAt).toLocaleDateString()}
-                </p>
+              <div className="flex flex-row items-center gap-2">
+                <span className="mr-2 text-sm text-gray-500">
+                  {question.votes} votes
+                </span>
+                <span className="mr-2 text-sm text-gray-500">
+                  {question.answers.length} answers
+                </span>
+                <span className="text-sm text-gray-500">
+                  {question.views} views
+                </span>
               </div>
             </div>
             <div className="mt-2">
-              <h2 className="text-lg font-semibold">{question.title}</h2>
-              <p className="mt-2 text-sm text-gray-500">
-                {question.description}
-              </p>
+              <p className="text-sm text-gray-500">{question.description}</p>
             </div>
-            <div className="mt-4">
+            <div className="mt-2">
               {question.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="mr-2 inline-block rounded-full bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700"
+                  className="mr-2 rounded-md bg-gray-100 px-2 py-1 text-xs text-gray-500"
                 >
                   {tag}
                 </span>
@@ -129,6 +107,49 @@ const MainContent: React.FC = () => {
             </div>
           </div>
         ))}
+      </div>
+      {/*pagination buttons*/}
+      <div className="mt-4 flex flex-row items-center justify-between">
+        <div className="flex flex-row gap-2">
+          <Button variant="outline" className="h-8 px-3">
+            Prev
+          </Button>
+          <Button variant="outline" className="h-8 px-3">
+            1
+          </Button>
+          <Button variant="outline" className="h-8 px-3">
+            2
+          </Button>
+          <Button variant="outline" className="h-8 px-3">
+            3
+          </Button>
+          <Button variant="outline" className="h-8 px-3">
+            4
+          </Button>
+          <Button variant="outline" className="h-8 px-3">
+            5
+          </Button>
+          <Button variant="outline" className="h-8 px-3">
+            Next
+          </Button>
+        </div>
+        <div className="flex flex-row gap-2">
+          <Button variant="outline" className="h-8 px-3">
+            10
+          </Button>
+          <Button variant="outline" className="h-8 px-3">
+            20
+          </Button>
+          <Button variant="outline" className="h-8 px-3">
+            30
+          </Button>
+          <Button variant="outline" className="h-8 px-3">
+            40
+          </Button>
+          <Button variant="outline" className="h-8 px-3">
+            50
+          </Button>
+        </div>
       </div>
     </main>
   );
@@ -163,15 +184,20 @@ const Sidebar: React.FC = () => {
       <div className="rounded-md border border-gray-200 bg-white p-4">
         <h2 className="text-lg font-semibold">Top Tags</h2>
         <div className="mt-4">
-          <span className="mr-2 inline-block rounded-full bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700">
-            tailwindcss
-          </span>
-          <span className="mr-2 inline-block rounded-full bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700">
-            css
-          </span>
-          <span className="mr-2 inline-block rounded-full bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700">
-            javascript
-          </span>
+          <div className="flex flex-row gap-2">
+            <Link href="/" className="text-sm text-gray-500">
+              Javascript
+            </Link>
+            <Link href="/" className="text-sm text-gray-500">
+              React
+            </Link>
+            <Link href="/" className="text-sm text-gray-500">
+              Next.js
+            </Link>
+            <Link href="/" className="text-sm text-gray-500">
+              Tailwind CSS
+            </Link>
+          </div>
         </div>
       </div>
       <div className="rounded-md border border-gray-200 bg-white p-4">
@@ -225,7 +251,6 @@ const questions = [
     description:
       "I want to use Next.js in my project, but I don't know how to use it.",
     tags: ["nextjs", "react"],
-    hot: true,
     author: {
       id: 1,
       name: "John Doe",
@@ -234,22 +259,14 @@ const questions = [
     },
     createdAt: "2021-10-10T12:00:00.000Z",
     updatedAt: "2021-10-10T12:00:00.000Z",
-  },
-  {
-    id: 2,
-    title: "How to use Tailwind CSS?",
-    description:
-      "I want to use Tailwind CSS in my project, but I don't know how to use it.",
-    tags: ["tailwindcss", "css"],
-    hot: true,
-    author: {
-      id: 1,
-      name: "John Doe",
-      image:
-        "https://avatars.githubusercontent.com/u/95122845?s=400&u=f4ef37b2c744c6412a0a6a7d2adbeeb407022a74&v=4",
-    },
-    createdAt: "2021-10-10T12:00:00.000Z",
-    updatedAt: "2021-10-10T12:00:00.000Z",
+    votes: 10,
+    answers: [
+      {
+        id: 1,
+        content: "You can use Next.js by following the documentation.",
+      },
+    ],
+    views: 100,
   },
   {
     id: 2,
@@ -265,22 +282,14 @@ const questions = [
     },
     createdAt: "2021-10-10T12:00:00.000Z",
     updatedAt: "2021-10-10T12:00:00.000Z",
-  },
-  {
-    id: 2,
-    title: "How to use Tailwind CSS?",
-    description:
-      "I want to use Tailwind CSS in my project, but I don't know how to use it.",
-    tags: ["tailwindcss", "css"],
-    hot: true,
-    author: {
-      id: 1,
-      name: "John Doe",
-      image:
-        "https://avatars.githubusercontent.com/u/95122845?s=400&u=f4ef37b2c744c6412a0a6a7d2adbeeb407022a74&v=4",
-    },
-    createdAt: "2021-10-10T12:00:00.000Z",
-    updatedAt: "2021-10-10T12:00:00.000Z",
+    votes: 10,
+    answers: [
+      {
+        id: 1,
+        content: "You can use Next.js by following the documentation.",
+      },
+    ],
+    views: 100,
   },
   {
     id: 2,
@@ -296,5 +305,59 @@ const questions = [
     },
     createdAt: "2021-10-10T12:00:00.000Z",
     updatedAt: "2021-10-10T12:00:00.000Z",
+    votes: 10,
+    answers: [
+      {
+        id: 1,
+        content: "You can use Next.js by following the documentation.",
+      },
+    ],
+    views: 100,
+  },
+  {
+    id: 2,
+    title: "How to use Tailwind CSS?",
+    description:
+      "I want to use Tailwind CSS in my project, but I don't know how to use it.",
+    tags: ["tailwindcss", "css"],
+    author: {
+      id: 1,
+      name: "John Doe",
+      image:
+        "https://avatars.githubusercontent.com/u/95122845?s=400&u=f4ef37b2c744c6412a0a6a7d2adbeeb407022a74&v=4",
+    },
+    createdAt: "2021-10-10T12:00:00.000Z",
+    updatedAt: "2021-10-10T12:00:00.000Z",
+    votes: 10,
+    answers: [
+      {
+        id: 1,
+        content: "You can use Next.js by following the documentation.",
+      },
+    ],
+    views: 100,
+  },
+  {
+    id: 2,
+    title: "How to use Tailwind CSS?",
+    description:
+      "I want to use Tailwind CSS in my project, but I don't know how to use it.",
+    tags: ["tailwindcss", "css"],
+    author: {
+      id: 1,
+      name: "John Doe",
+      image:
+        "https://avatars.githubusercontent.com/u/95122845?s=400&u=f4ef37b2c744c6412a0a6a7d2adbeeb407022a74&v=4",
+    },
+    createdAt: "2021-10-10T12:00:00.000Z",
+    updatedAt: "2021-10-10T12:00:00.000Z",
+    votes: 10,
+    answers: [
+      {
+        id: 1,
+        content: "You can use Next.js by following the documentation.",
+      },
+    ],
+    views: 100,
   },
 ];
