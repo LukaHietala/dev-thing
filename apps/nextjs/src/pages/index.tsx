@@ -1,20 +1,34 @@
 import type { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Filter } from "lucide-react";
+import { ArrowDownUp, Filter, Megaphone } from "lucide-react";
 
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 
 const MainContent: React.FC = () => {
   return (
-    <main className="flex-1">
+    <main className="mb-8 flex-1">
+      <div className="mb-4 flex flex-row items-center justify-between gap-6 rounded-md border border-sky-300 bg-sky-100 p-4">
+        <div>
+          <h2 className="text-xl font-semibold text-gray-900">
+            Feature Requests!
+          </h2>
+          <p className="mt-2 text-sm text-gray-500">
+            This app is still in development. If you have any feature requests,
+            or if you found a bug, please create an issue on the GitHub
+            repository. :)
+          </p>
+        </div>
+        <Megaphone size={48} className="text-sky-500" />
+      </div>
       <h2 className="text-2xl font-semibold text-gray-900">All Questions</h2>
       <p className="mt-2 text-sm text-gray-500">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quod
         voluptates, quibusdam, voluptatum, quia voluptate quos dolorum
         voluptatibus quas quibusdam, quia voluptate quos dolorum voluptatibus
-        </p>
+      </p>
+
       <div className="mt-6 flex flex-row items-center justify-between">
         <div className="flex flex-row gap-2">
           <Button variant="secondary" className="inline-flex">
@@ -22,7 +36,7 @@ const MainContent: React.FC = () => {
             <span className="ml-1">Filter</span>
           </Button>
           <Button variant="secondary" className="inline-flex">
-            <Filter size={14} />
+            <ArrowDownUp size={14} />
             <span className="ml-1">Sort</span>
           </Button>
         </div>

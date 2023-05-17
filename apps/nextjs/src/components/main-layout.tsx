@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { signIn, signOut } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 import { api } from "~/utils/api";
 import { Button } from "~/components/ui/button";
