@@ -43,7 +43,7 @@ const MainContent: React.FC = () => {
               >
                 <div
                   className="relative flex h-12 items-center justify-between
-                  rounded-t-md bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400
+                  rounded-t-md bg-gray-200
                 "
                 >
                   <Image
@@ -172,31 +172,6 @@ const Sidebar: React.FC = () => {
           <span className="mr-2 inline-block rounded-full bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700">
             javascript
           </span>
-        </div>
-      </div>
-      <div className="rounded-md border border-gray-200 bg-white p-4">
-        <h2 className="text-lg font-semibold">Top Users</h2>
-        <div className="mt-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <Image
-                width={40}
-                height={40}
-                src={
-                  "https://avatars.githubusercontent.com/u/95122845?s=400&u=f4ef37b2c744c6412a0a6a7d2adbeeb407022a74&v=4"
-                }
-                alt="profile img"
-                className="h-auto w-10 rounded-full border-2 border-primary object-cover"
-              />
-              <div className="ml-2">
-                <p className="text-sm font-semibold">{"John Doe"}</p>
-                <p className="text-xs text-gray-500">1,000 points</p>
-              </div>
-            </div>
-            <div>
-              <p className="text-xs text-gray-500">1,000 points</p>
-            </div>
-          </div>
         </div>
       </div>
       <div className="rounded-md border border-gray-200 bg-white p-4">
