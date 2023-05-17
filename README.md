@@ -1,21 +1,49 @@
-about in progress
+# Unnamed project
 
-## Quick Contribution Guide
+An open source application for asking questions related to technology and programming, and creating a community of people who are interested in technology and programming. This is just a side project of mine, so I don't know how far this will go, but I will try to make it as good as I can on my spare time. 
 
-Before you start make sure to have all the following things installed:
+
+## Features
+
+- User authentication with GitHub
+
+
+## Roadmap
+
+- [ ] Asking, answering and commenting on questions
+- [ ] Upvoting and downvoting questions and answers
+- [ ] Tag system 
+- [ ] Search system
+- [ ] User profiles
+- [ ] User settings
+- [ ] Ability to create articles
+- [ ] Ability to create polls
+
+## Running the project
+
+### Prerequisites
 
 ```shell
-node: ">=v18.16.0"
-pnpm: "^8.5.0"
+node: "^>=18.16.0"
+pnpm: "^8.3.1"
 ```
 
-### Set up local repo
+### Installation and running
 
-First, clone and install all the project dependencies-
+Install the dependencies and run the project with pnpm.
 
 ```shell
-git clone git@github.com:LukaHietala/dev-thing.git     # Clone the repo to your local machine
-pnpm install                                           # Make sure to install the dependencies in root folder
+pnpm install
 ```
 
-Then you need to copy `.env.example` and change the name to `.env`. After that, fill...
+Copy `.env.example` to `.env` and update the variables accordingly.
+
+```shell
+cp .env.example .env
+```
+
+Run the project in development mode.
+
+```shell
+pnpm dev
+```
