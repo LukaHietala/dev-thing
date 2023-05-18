@@ -1,27 +1,17 @@
 import type { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDownUp, Filter, Megaphone } from "lucide-react";
+import { ArrowDownUp, Filter } from "lucide-react";
 
+import { api } from "~/utils/api";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 
 const MainContent: React.FC = () => {
+  const { data: questions, isLoading } = api.question.getAll.useQuery();
+
   return (
     <main className="mb-8 flex-1">
-      <div className="mb-4 flex flex-row items-center justify-between gap-6 rounded-md border border-sky-300 bg-sky-100 p-4">
-        <div>
-          <h2 className="text-xl font-semibold text-gray-900">
-            Feature Requests!
-          </h2>
-          <p className="mt-2 text-sm text-gray-500">
-            This app is still in development. If you have any feature requests,
-            or if you found a bug, please create an issue on the GitHub
-            repository. :)
-          </p>
-        </div>
-        <Megaphone size={48} className="text-sky-500" />
-      </div>
       <h2 className="text-2xl font-semibold text-gray-900">All Questions</h2>
       <p className="mt-2 text-sm text-gray-500">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quod
@@ -65,63 +55,74 @@ const MainContent: React.FC = () => {
           </Button>
         </div>
       </div>
-
-      <div className="mt-2 divide-y divide-gray-200">
-        {questions.map((question) => (
-          <div key={question.id} className="flex flex-col py-4">
-            <div className="flex flex-row items-center justify-between">
-              <div className="flex flex-row items-center gap-2">
-                <Image
-                  width={40}
-                  height={40}
-                  src={question.author.image}
-                  alt="profile img"
-                  className="h-auto w-10 rounded-full border-2 border-white object-cover"
-                />
-                <div className="flex flex-col">
-                  <Link href={`/questions/${question.id}`}>
-                    <span className="text-lg font-semibold">
-                      {question.title}
-                    </span>
-                  </Link>
-                  <span className="text-sm text-gray-500">
-                    Asked by{" "}
-                    <Link href={`/users/${question.author.id}`}>
-                      <span className="cursor-pointer underline">
-                        {question.author.name}
+      {isLoading && (
+        <div className="mt-4 flex flex-row items-center justify-center">
+          <span className="text-gray-500">Loading...</span>
+        </div>
+      )}
+      {questions?.length === 0 && !isLoading && (
+        <div className="mt-4 flex flex-row items-center justify-center">
+          <span className="text-gray-500">No questions found.</span>
+        </div>
+      )}
+      {questions && (
+        <div className="mt-2 divide-y divide-gray-200">
+          {questions.map((question) => (
+            <div key={question.id} className="flex flex-col py-4">
+              <div className="flex flex-row items-center justify-between">
+                <div className="flex flex-row items-center gap-2">
+                  <Image
+                    width={40}
+                    height={40}
+                    src={question.author.image || ""}
+                    alt="profile img"
+                    className="h-auto w-10 rounded-full border-2 border-white object-cover"
+                  />
+                  <div className="flex flex-col">
+                    <Link href={`/questions/${question.id}`}>
+                      <span className="text-lg font-semibold">
+                        {question.title}
                       </span>
                     </Link>
+                    <span className="text-sm text-gray-500">
+                      Asked by{" "}
+                      <Link href={`/users/${question.author.id}`}>
+                        <span className="cursor-pointer underline">
+                          {question.author.name}
+                        </span>
+                      </Link>
+                    </span>
+                  </div>
+                </div>
+                <div className="flex flex-row items-center gap-2">
+                  <span className="mr-2 text-sm text-gray-500">
+                    {question.votes} votes
+                  </span>
+                  <span className="mr-2 text-sm text-gray-500">
+                    {question.answers.length} answers
+                  </span>
+                  <span className="text-sm text-gray-500">
+                    {question.views} views
                   </span>
                 </div>
               </div>
-              <div className="flex flex-row items-center gap-2">
-                <span className="mr-2 text-sm text-gray-500">
-                  {question.votes} votes
-                </span>
-                <span className="mr-2 text-sm text-gray-500">
-                  {question.answers.length} answers
-                </span>
-                <span className="text-sm text-gray-500">
-                  {question.views} views
-                </span>
+              <div className="mt-2">
+                <p className="text-sm text-gray-500">{question.description}</p>
+              </div>
+              <div className="mt-2">
+                {question.tags.map((tag) => (
+                  <span
+                    key={tag.id}
+                    className="mr-2 rounded-md bg-gray-100 px-2 py-1 text-xs text-gray-500"
+                  >
+                    {tag.name}
+                  </span>
+                ))}
               </div>
             </div>
-            <div className="mt-2">
-              <p className="text-sm text-gray-500">{question.description}</p>
-            </div>
-            <div className="mt-2">
-              {question.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="mr-2 rounded-md bg-gray-100 px-2 py-1 text-xs text-gray-500"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
       {/*pagination buttons*/}
       <div className="mt-4 flex flex-row items-center justify-between">
         <div className="flex flex-row gap-2">
@@ -257,121 +258,3 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-
-const questions = [
-  {
-    id: 1,
-    title: "How to use Next.js?",
-    description:
-      "I want to use Next.js in my project, but I don't know how to use it.",
-    tags: ["nextjs", "react"],
-    author: {
-      id: 1,
-      name: "John Doe",
-      image:
-        "https://avatars.githubusercontent.com/u/95122845?s=400&u=f4ef37b2c744c6412a0a6a7d2adbeeb407022a74&v=4",
-    },
-    createdAt: "2021-10-10T12:00:00.000Z",
-    updatedAt: "2021-10-10T12:00:00.000Z",
-    votes: 10,
-    answers: [
-      {
-        id: 1,
-        content: "You can use Next.js by following the documentation.",
-      },
-    ],
-    views: 100,
-  },
-  {
-    id: 2,
-    title: "How to use Tailwind CSS?",
-    description:
-      "I want to use Tailwind CSS in my project, but I don't know how to use it.",
-    tags: ["tailwindcss", "css"],
-    author: {
-      id: 1,
-      name: "John Doe",
-      image:
-        "https://avatars.githubusercontent.com/u/95122845?s=400&u=f4ef37b2c744c6412a0a6a7d2adbeeb407022a74&v=4",
-    },
-    createdAt: "2021-10-10T12:00:00.000Z",
-    updatedAt: "2021-10-10T12:00:00.000Z",
-    votes: 10,
-    answers: [
-      {
-        id: 1,
-        content: "You can use Next.js by following the documentation.",
-      },
-    ],
-    views: 100,
-  },
-  {
-    id: 2,
-    title: "How to use Tailwind CSS?",
-    description:
-      "I want to use Tailwind CSS in my project, but I don't know how to use it.",
-    tags: ["tailwindcss", "css"],
-    author: {
-      id: 1,
-      name: "John Doe",
-      image:
-        "https://avatars.githubusercontent.com/u/95122845?s=400&u=f4ef37b2c744c6412a0a6a7d2adbeeb407022a74&v=4",
-    },
-    createdAt: "2021-10-10T12:00:00.000Z",
-    updatedAt: "2021-10-10T12:00:00.000Z",
-    votes: 10,
-    answers: [
-      {
-        id: 1,
-        content: "You can use Next.js by following the documentation.",
-      },
-    ],
-    views: 100,
-  },
-  {
-    id: 2,
-    title: "How to use Tailwind CSS?",
-    description:
-      "I want to use Tailwind CSS in my project, but I don't know how to use it.",
-    tags: ["tailwindcss", "css"],
-    author: {
-      id: 1,
-      name: "John Doe",
-      image:
-        "https://avatars.githubusercontent.com/u/95122845?s=400&u=f4ef37b2c744c6412a0a6a7d2adbeeb407022a74&v=4",
-    },
-    createdAt: "2021-10-10T12:00:00.000Z",
-    updatedAt: "2021-10-10T12:00:00.000Z",
-    votes: 10,
-    answers: [
-      {
-        id: 1,
-        content: "You can use Next.js by following the documentation.",
-      },
-    ],
-    views: 100,
-  },
-  {
-    id: 2,
-    title: "How to use Tailwind CSS?",
-    description:
-      "I want to use Tailwind CSS in my project, but I don't know how to use it.",
-    tags: ["tailwindcss", "css"],
-    author: {
-      id: 1,
-      name: "John Doe",
-      image:
-        "https://avatars.githubusercontent.com/u/95122845?s=400&u=f4ef37b2c744c6412a0a6a7d2adbeeb407022a74&v=4",
-    },
-    createdAt: "2021-10-10T12:00:00.000Z",
-    updatedAt: "2021-10-10T12:00:00.000Z",
-    votes: 10,
-    answers: [
-      {
-        id: 1,
-        content: "You can use Next.js by following the documentation.",
-      },
-    ],
-    views: 100,
-  },
-];
