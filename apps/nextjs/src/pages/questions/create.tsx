@@ -44,7 +44,13 @@ const CreateQuestion: NextPage = () => {
       </p>
       <hr className="my-8" />
       <Form {...form}>
-        <form onSubmit={void form.handleSubmit(onSubmit)} className="space-y-8">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            form.handleSubmit(onSubmit);
+          }}
+          className="space-y-8"
+        >
           <FormField
             control={form.control}
             name="title"
