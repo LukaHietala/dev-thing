@@ -16,16 +16,14 @@ export const postRouter = createTRPCRouter({
     .input(
       z.object({
         title: z.string(),
-        description: z.string(),
         content: z.string(),
       }),
     )
     .mutation(({ ctx, input }) => {
-      const { title, description, content } = input;
+      const { title, content } = input;
       return ctx.prisma.post.create({
         data: {
           title: title,
-          description: description,
           content: content,
           author: {
             connect: {

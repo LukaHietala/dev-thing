@@ -65,19 +65,18 @@ model VerificationToken {
 // USER => POST => ANSWER => COMMENT
 
 model Post {
-  id          String   @id @default(cuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  title       String
-  description String
-  content     String   @db.Text
-  draft       Boolean  @default(true)
-  votes       Int      @default(0)
-  resolved    Boolean  @default(false)
-  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId    String
-  tags        Tag[]
-  answers     Answer[]
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  content   String   @db.Text
+  draft     Boolean  @default(true)
+  votes     Int      @default(0)
+  resolved  Boolean  @default(false)
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String
+  tags      Tag[]
+  answers   Answer[]
 
   @@index([authorId])
 }
