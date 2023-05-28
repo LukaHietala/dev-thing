@@ -8,6 +8,7 @@ const Home: NextPage = () => {
 
   return (
     <>
+      <h2>posts:</h2>
       {isLoading && (
         <div>
           <span>Loading...</span>
@@ -15,10 +16,9 @@ const Home: NextPage = () => {
       )}
       {posts?.length === 0 && !isLoading && (
         <div>
-          <span>No questions found.</span>
+          <span>No posts found.</span>
         </div>
       )}
-      <h2>posts:</h2>
       {posts?.map((post) => (
         // no styles for now
         <div key={post.id} className="mt-4">
