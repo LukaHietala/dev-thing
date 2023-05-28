@@ -9,6 +9,7 @@ const Home: NextPage = () => {
   return (
     <>
       <h2>posts:</h2>
+      <Link href="/posts/create">Create a new post</Link>
       {isLoading && (
         <div>
           <span>Loading...</span>
@@ -21,7 +22,7 @@ const Home: NextPage = () => {
       )}
       {posts?.map((post) => (
         // no styles for now
-        <div key={post.id} className="mt-4">
+        <div key={post.id}>
           <Link href={`/posts/${post.id}`}>
             <span>{post.title}</span>
           </Link>
