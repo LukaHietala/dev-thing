@@ -16,33 +16,35 @@ import {
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
 
-const postCreateFormSchema = z.object({
+const questionCreateFormSchema = z.object({
   title: z.string().min(1).max(100),
   content: z.string().min(1).max(1000),
 });
 
-const CreatePost: NextPage = () => {
-  const form = useForm<z.infer<typeof postCreateFormSchema>>({
-    resolver: zodResolver(postCreateFormSchema),
+const CreateQuestion: NextPage = () => {
+  const form = useForm<z.infer<typeof questionCreateFormSchema>>({
+    resolver: zodResolver(questionCreateFormSchema),
     defaultValues: {
       title: "",
       content: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof postCreateFormSchema>) {
+  function onSubmit(values: z.infer<typeof questionCreateFormSchema>) {
     console.log(values);
   }
   return (
     <main className="mx-auto my-10 max-w-3xl">
       <h1 className="text-3xl font-bold">Create a question</h1>
       <p className="text-muted-foreground">
-        Ask a question, get an answer, or share your thoughts.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, odio
+        quas repellat architecto obcaecati reiciendis in eligendi, maiores unde
+        rem reprehenderit ad consequuntur? Illo, provident! Voluptatibus
+        explicabo nostrum corporis perspiciatis?
       </p>
       <hr className="my-8" />
-
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={void form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}
             name="title"
@@ -77,7 +79,6 @@ const CreatePost: NextPage = () => {
               </FormItem>
             )}
           />
-
           <Button type="submit">Ask</Button>
         </form>
       </Form>
@@ -85,4 +86,4 @@ const CreatePost: NextPage = () => {
   );
 };
 
-export default CreatePost;
+export default CreateQuestion;

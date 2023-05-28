@@ -17,12 +17,10 @@ const Label = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <LabelPrimitive.Root
     ref={ref}
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     className={cn(labelVariants(), className)}
     {...props}
   />
 ));
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
 Label.displayName = LabelPrimitive.Root.displayName;
 
 export { Label };

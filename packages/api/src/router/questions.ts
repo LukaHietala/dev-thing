@@ -2,9 +2,9 @@ import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
-export const postRouter = createTRPCRouter({
+export const questionRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.post.findMany({
+    return ctx.prisma.question.findMany({
       include: {
         answers: true,
         author: true,
@@ -21,7 +21,7 @@ export const postRouter = createTRPCRouter({
     )
     .mutation(({ ctx, input }) => {
       const { title, content } = input;
-      return ctx.prisma.post.create({
+      return ctx.prisma.question.create({
         data: {
           title: title,
           content: content,

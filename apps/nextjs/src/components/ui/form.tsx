@@ -93,7 +93,6 @@ const FormLabel = React.forwardRef<
   return (
     <Label
       ref={ref}
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       className={cn(error && "text-destructive", className)}
       htmlFor={formItemId}
       {...props}

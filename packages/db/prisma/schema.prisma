@@ -42,14 +42,14 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
-  Post          Post[]
+  Question      Question[]
   Answer        Answer[]
   Comment       Comment[]
 }
@@ -62,9 +62,9 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-// USER => POST => ANSWER => COMMENT
+// USER => QUESTION => ANSWER => COMMENT
 
-model Post {
+model Question {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -82,27 +82,27 @@ model Post {
 }
 
 model Tag {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String     @id @default(cuid())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   name      String
-  posts     Post[]
+  questions Question[]
 }
 
 model Answer {
-  id        String    @id @default(cuid())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  content   String    @db.Text
-  best      Boolean   @default(false)
-  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId  String
-  post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId    String
-  comments  Comment[]
+  id         String    @id @default(cuid())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  content    String    @db.Text
+  best       Boolean   @default(false)
+  author     User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId   String
+  question   Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId String
+  comments   Comment[]
 
   @@index([authorId])
-  @@index([postId])
+  @@index([questionId])
 }
 
 model Comment {
