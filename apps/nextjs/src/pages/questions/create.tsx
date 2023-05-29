@@ -44,13 +44,8 @@ const CreateQuestion: NextPage = () => {
       </p>
       <hr className="my-8" />
       <Form {...form}>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            form.handleSubmit(onSubmit);
-          }}
-          className="space-y-8"
-        >
+        {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}
             name="title"
