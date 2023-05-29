@@ -2,9 +2,11 @@ import type { NextPage } from "next";
 import Link from "next/link";
 
 import { api } from "~/utils/api";
+import { useToast } from "~/components/ui/use-toast";
 
 const Home: NextPage = () => {
   const { data: questions, isLoading } = api.question.getAll.useQuery();
+  const { toast } = useToast();
 
   return (
     <>
@@ -28,6 +30,25 @@ const Home: NextPage = () => {
           </Link>
         </div>
       ))}
+      <button
+        onClick={() => {
+          toast({
+            title: "Toast title",
+            description: "This is a description",
+            action: (
+              <button
+                onClick={() => {
+                  console.log("clicked");
+                }}
+              >
+                Click me
+              </button>
+            ),
+          });
+        }}
+      >
+        Get some toast 🍞
+      </button>
     </>
   );
 };
