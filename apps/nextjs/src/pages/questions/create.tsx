@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
+import { api } from "~/utils/api";
 import { Button } from "~/components/ui/button";
 import {
   Form,
@@ -22,6 +23,15 @@ const questionCreateFormSchema = z.object({
 });
 
 const CreateQuestion: NextPage = () => {
+  const { mutate: createMutation } = api.question.create.useMutation({
+    onSuccess: () => {
+      // TODO: Toast and redirect
+    },
+    onError: () => {
+      // TODO: Toast
+    },
+  });
+
   const form = useForm<z.infer<typeof questionCreateFormSchema>>({
     resolver: zodResolver(questionCreateFormSchema),
     defaultValues: {
@@ -31,7 +41,7 @@ const CreateQuestion: NextPage = () => {
   });
 
   function onSubmit(values: z.infer<typeof questionCreateFormSchema>) {
-    console.log(values);
+    createMutation(values);
   }
   return (
     <main className="mx-auto my-10 max-w-3xl">
