@@ -28,3 +28,10 @@ Run the project in development mode.
 ```shell
 pnpm dev
 ```
+
+### Notes for development:
+
+This notes section will be temporary, and will be removed once the project has proper documentation.
+
+- All common ui elements are in `src/components/ui`, to add new ui elements, check https://ui.shadcn.com/docs/components/ for the list of available components. If what you want to add is not available, you can create a new component in `src/components/ui`
+-

@@ -4,26 +4,27 @@ import Link from "next/link";
 import { api } from "~/utils/api";
 
 const Home: NextPage = () => {
-  const { data: posts, isLoading } = api.post.getAll.useQuery();
+  const { data: questions, isLoading } = api.question.getAll.useQuery();
 
   return (
     <>
-      <h2>posts:</h2>
+      <h2>questions:</h2>
+      <Link href="/questions/create">Create a new question</Link>
       {isLoading && (
         <div>
           <span>Loading...</span>
         </div>
       )}
-      {posts?.length === 0 && !isLoading && (
+      {questions?.length === 0 && !isLoading && (
         <div>
-          <span>No posts found.</span>
+          <span>No questions found.</span>
         </div>
       )}
-      {posts?.map((post) => (
+      {questions?.map((question) => (
         // no styles for now
-        <div key={post.id} className="mt-4">
-          <Link href={`/posts/${post.id}`}>
-            <span>{post.title}</span>
+        <div key={question.id}>
+          <Link href={`/questions/${question.id}`}>
+            <span>{question.title}</span>
           </Link>
         </div>
       ))}
