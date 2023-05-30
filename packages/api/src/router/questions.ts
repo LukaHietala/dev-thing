@@ -33,4 +33,40 @@ export const questionRouter = createTRPCRouter({
         },
       });
     }),
+  getOne: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(({ ctx, input }) => {
+      const { id } = input;
+      return ctx.prisma.question.findUnique({
+        where: {
+          id: id,
+        },
+        include: {
+          answers: {
+            include: {
+              author: {
+                select: {
+                  id: true,
+                  name: true,
+                  image: true,
+                },
+              },
+              comments: true,
+            },
+          },
+          author: true,
+          tags: true,
+          comments: {
+            include: {
+              author: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+      });
+    }),
 });
