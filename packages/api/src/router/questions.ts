@@ -58,12 +58,7 @@ export const questionRouter = createTRPCRouter({
           tags: true,
           comments: {
             include: {
-              author: {
-                select: {
-                  id: true,
-                  name: true,
-                },
-              },
+              author: true,
             },
           },
         },
