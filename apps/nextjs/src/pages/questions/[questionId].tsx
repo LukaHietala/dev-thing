@@ -27,10 +27,12 @@ const QuestionPage = () => {
   }
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <h1>title: {question.title}</h1>
       <p>content: {question.content}</p>
       <p>created at: {question.createdAt.toISOString()}</p>
+      <p>author: {question.author.name}</p>
+      <p>votes: {question.votes}</p>
       <div>
         <h2>Tags</h2>
         {question.tags.map((tag) => (
@@ -44,6 +46,16 @@ const QuestionPage = () => {
         {question.answers.map((answer) => (
           <div key={answer.id}>
             <p>content: {answer.content}</p>
+            <div>
+              <h2>answer comments:</h2>
+              {answer.comments.map((comment) => (
+                <div key={comment.id}>
+                  <p>content: {comment.content}</p>
+                  <p>created at: {comment.createdAt.toISOString()}</p>
+                  <p>author: {comment.author.name}</p>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>

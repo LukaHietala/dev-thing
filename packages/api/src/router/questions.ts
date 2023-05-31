@@ -51,7 +51,11 @@ export const questionRouter = createTRPCRouter({
                   image: true,
                 },
               },
-              comments: true,
+              comments: {
+                include: {
+                  author: true,
+                },
+              },
             },
           },
           author: true,
