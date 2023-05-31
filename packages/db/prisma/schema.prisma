@@ -65,18 +65,19 @@ model VerificationToken {
 // USER => QUESTION => ANSWER => COMMENT
 
 model Question {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   title     String
-  content   String   @db.Text
-  draft     Boolean  @default(true)
-  votes     Int      @default(0)
-  resolved  Boolean  @default(false)
-  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  content   String    @db.Text
+  draft     Boolean   @default(true)
+  votes     Int       @default(0)
+  resolved  Boolean   @default(false)
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId  String
   tags      Tag[]
   answers   Answer[]
+  comments  Comment[]
 
   @@index([authorId])
 }
@@ -106,15 +107,18 @@ model Answer {
 }
 
 model Comment {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  content   String   @db.Text
-  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId  String
-  answer    Answer   @relation(fields: [answerId], references: [id], onDelete: Cascade)
-  answerId  String
+  id         String    @id @default(cuid())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  content    String    @db.Text
+  author     User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId   String
+  answer     Answer    @relation(fields: [answerId], references: [id], onDelete: Cascade)
+  answerId   String
+  Question   Question? @relation(fields: [questionId], references: [id])
+  questionId String?
 
   @@index([authorId])
   @@index([answerId])
+  @@index([questionId])
 }
