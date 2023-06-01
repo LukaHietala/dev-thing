@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { api } from "~/utils/api";
 
 const TagsPage = () => {
@@ -17,7 +19,7 @@ const TagsPage = () => {
       <div className="mx-auto grid w-full max-w-4xl grid-cols-3 gap-4">
         {tags.map((tag) => (
           <div key={tag.id}>
-            <p>name: {tag.name}</p>
+            <Link href={`/tags/${tag.id}`}>name: {tag.name}</Link>
             <p>created at: {tag.createdAt.toISOString()}</p>
             <p>questions count: {tag._count.questions}</p>
           </div>

@@ -26,4 +26,29 @@ export const tagRouter = createTRPCRouter({
       },
     });
   }),
+  getOne: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(({ ctx, input }) => {
+      const { id } = input;
+      return ctx.prisma.tag.findUnique({
+        where: {
+          id: id,
+        },
+        include: {
+          questions: {
+            include: {
+              author: true,
+              tags: true,
+              _count: {
+                select: {
+                  answers: true,
+                  comments: true,
+                },
+              },
+            },
+          },
+          moderators: true,
+        },
+      });
+    }),
 });
