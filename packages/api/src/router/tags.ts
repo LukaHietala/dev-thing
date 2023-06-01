@@ -37,7 +37,13 @@ export const tagRouter = createTRPCRouter({
         include: {
           questions: {
             include: {
-              author: true,
+              author: {
+                select: {
+                  id: true,
+                  name: true,
+                  image: true,
+                },
+              },
               tags: true,
               _count: {
                 select: {
