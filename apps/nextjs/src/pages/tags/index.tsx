@@ -16,7 +16,7 @@ const TagsPage = () => {
       <h1>Tags</h1>
       <div className="mx-auto grid w-full max-w-4xl grid-cols-3 gap-4">
         {tags.map((tag) => (
-          <div key={tag.id} className="my-2">
+          <div key={tag.id}>
             <p>name: {tag.name}</p>
             <p>created at: {tag.createdAt.toISOString()}</p>
             <p>questions count: {tag._count.questions}</p>
