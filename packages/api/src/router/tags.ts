@@ -65,6 +65,7 @@ export const tagRouter = createTRPCRouter({
       }),
     )
     .mutation(({ ctx, input }) => {
+      // TODO: check if user is has permission to create tag
       const { name, description } = input;
       return ctx.prisma.tag.create({
         data: {
