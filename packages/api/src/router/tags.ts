@@ -13,7 +13,13 @@ export const tagRouter = createTRPCRouter({
         },
         questions: {
           include: {
-            author: true,
+            author: {
+              select: {
+                id: true,
+                name: true,
+                image: true,
+              },
+            },
             tags: true,
             _count: {
               select: {
@@ -53,7 +59,13 @@ export const tagRouter = createTRPCRouter({
               },
             },
           },
-          moderators: true,
+          moderators: {
+            select: {
+              id: true,
+              name: true,
+              image: true,
+            },
+          },
         },
       });
     }),

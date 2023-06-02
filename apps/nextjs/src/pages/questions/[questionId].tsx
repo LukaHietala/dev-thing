@@ -15,8 +15,6 @@ const QuestionPage = () => {
     id: questionId as string,
   });
 
-  console.log(question);
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
