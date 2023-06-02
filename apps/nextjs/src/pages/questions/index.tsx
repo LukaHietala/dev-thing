@@ -4,7 +4,6 @@ import { api } from "~/utils/api";
 
 const QuestionsPage = () => {
   const { data: questions, isLoading } = api.question.getAll.useQuery();
-  console.log(questions);
   return (
     <>
       <h2>questions:</h2>
