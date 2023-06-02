@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const tagRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
@@ -54,6 +54,27 @@ export const tagRouter = createTRPCRouter({
             },
           },
           moderators: true,
+        },
+      });
+    }),
+  create: protectedProcedure
+    .input(
+      z.object({
+        name: z.string(),
+        description: z.string(),
+      }),
+    )
+    .mutation(({ ctx, input }) => {
+      const { name, description } = input;
+      return ctx.prisma.tag.create({
+        data: {
+          name: name,
+          description: description,
+          moderators: {
+            connect: {
+              id: ctx.session?.user.id,
+            },
+          },
         },
       });
     }),
