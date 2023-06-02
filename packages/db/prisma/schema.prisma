@@ -52,6 +52,10 @@ model User {
   Question      Question[]
   Answer        Answer[]
   Comment       Comment[]
+  Tag           Tag?       @relation(fields: [tagId], references: [id])
+  tagId         String?
+
+  @@index([tagId])
 }
 
 model VerificationToken {
@@ -83,11 +87,13 @@ model Question {
 }
 
 model Tag {
-  id        String     @id @default(cuid())
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  name      String
-  questions Question[]
+  id          String     @id @default(cuid())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  name        String
+  description String?    @db.Text
+  moderators  User[]
+  questions   Question[]
 }
 
 model Answer {
