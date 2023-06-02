@@ -6,9 +6,26 @@ export const questionRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.question.findMany({
       include: {
-        answers: true,
-        author: true,
-        tags: true,
+        _count: {
+          select: {
+            answers: true,
+            comments: true,
+          },
+        },
+
+        author: {
+          select: {
+            name: true,
+            id: true,
+            image: true,
+          },
+        },
+        tags: {
+          select: {
+            name: true,
+            id: true,
+          },
+        },
       },
     });
   }),
